@@ -26,12 +26,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_single" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_dialog"
+        android:layout_width="match_parent"
+        android:paddingHorizontal="10dp"
+        android:layout_height="wrap_content"
+        android:text="连续弹出Dialog"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_async" />
 
     <TextView
         android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/btn_async"
+        app:layout_constraintTop_toBottomOf="@id/btn_dialog"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

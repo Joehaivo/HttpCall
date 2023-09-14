@@ -9,9 +9,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.blankj.utilcode.util.ImageUtils
 import com.github.joehaivo.httpcall.databinding.ActivityMainBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.dialog.MaterialDialogs
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 import okhttp3.internal.wait
+import kotlin.coroutines.Continuation
+import kotlin.coroutines.resume
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -44,6 +49,25 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        binding.btnDialog.setOnClickListener {
+            lifecycleScope.launch {
+                showDialog("签到活动", "签到领10000币")
+                showDialog("新手任务", "做任务领20000币")
+                showDialog("首充奖励", "首充6元送神装")
+            }
+        }
+    }
 
+    suspend fun showDialog(title: String, content: String) = suspendCancellableCoroutine { continuation ->
+        MaterialAlertDialogBuilder(this)
+            .setTitle(title)
+            .setMessage(content)
+            .setPositiveButton("我知道了") { dialog, which ->
+                dialog.dismiss()
+            }
+            .setOnDismissListener {
+                continuation.resume(Unit)
+            }
+            .show()
     }
 }
