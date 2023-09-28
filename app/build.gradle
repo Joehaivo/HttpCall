@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.8.20'
 }
 
 android {
@@ -66,4 +67,5 @@ dependencies {
 //    implementation 'com.github.li-xiaojun.AndroidKTX:library:2.8.6'
 
     implementation 'com.tencent:mmkv-static:1.2.13'
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0"
 }

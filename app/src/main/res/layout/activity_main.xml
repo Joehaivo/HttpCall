@@ -7,41 +7,44 @@
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="match_parent"
-        tools:visibility="visible"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_single"
-        android:layout_width="match_parent"
-        android:paddingHorizontal="10dp"
-        android:layout_height="wrap_content"
-        android:text="单次请求网络"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_async"
-        android:layout_width="match_parent"
-        android:paddingHorizontal="10dp"
-        android:layout_height="wrap_content"
-        android:text="并行请求网络"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_single" />
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_dialog"
-        android:layout_width="match_parent"
-        android:paddingHorizontal="10dp"
-        android:layout_height="wrap_content"
-        android:text="连续弹出Dialog"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_async" />
+        tools:visibility="visible">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_single"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:text="单次请求网络"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_async"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:text="并行请求网络"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_single"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:text="连续弹出Dialog"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_async"/>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/ll_sp"
@@ -51,29 +54,30 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/et_sp_id"
                 android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content"/>
+
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/et_sp"
                 android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content"/>
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_sp_read"
-                android:layout_width="wrap_content"
                 style="@style/Widget.Material3.Button.IconButton.Filled"
-                android:paddingHorizontal="20dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingHorizontal="20dp"
                 android:text="读SP"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btn_async"/>
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_sp_write"
-                android:layout_width="wrap_content"
                 style="@style/Widget.Material3.Button.IconButton.Filled"
-                android:paddingHorizontal="20dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingHorizontal="20dp"
                 android:text="写SP"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -83,21 +87,45 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/podId"
-            android:layout_width="wrap_content"
             style="@style/Widget.Material3.Button.IconButton.Filled"
-            android:paddingHorizontal="20dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingHorizontal="20dp"
             android:text="PODID"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_gson"
+                style="@style/Widget.Material3.Button.IconButton.Filled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="20dp"
+                android:text="Gson Benchmark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
-        android:id="@+id/tv_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/btn_dialog"
-        />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_serial"
+                style="@style/Widget.Material3.Button.IconButton.Filled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="20dp"
+                android:text="Kotlin Serializtion Benchmark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/btn_dialog"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.constraintlayout.widget.ConstraintLayout>
