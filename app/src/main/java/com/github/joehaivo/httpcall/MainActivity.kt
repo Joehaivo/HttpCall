@@ -2,20 +2,14 @@ package com.github.joehaivo.httpcall
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.viewModels
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.util.Log
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
-import com.blankj.utilcode.util.ImageUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.github.joehaivo.httpcall.databinding.ActivityMainBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.dialog.MaterialDialogs
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
-import okhttp3.internal.wait
-import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 
 class MainActivity : AppCompatActivity() {
@@ -56,6 +50,21 @@ class MainActivity : AppCompatActivity() {
                 showDialog("首充奖励", "首充6元送神装")
             }
         }
+        binding.btnSpRead.setOnClickListener {
+            binding.tvContent.text = "${KVPool.user.id} - ${KVPool.user.name}"
+
+        }
+        binding.btnSpWrite.setOnClickListener {
+            binding.tvContent.text = ""
+            KVPool.user.id = binding.etSpId.text.toString()
+            KVPool.user.name = binding.etSp.text.toString()
+        }
+        binding.podId.setOnClickListener {
+            val serialno = CloudDeviceUtils.getPodId()
+            ToastUtils.showShort("podId=$serialno")
+            Log.d("TAG", "onCreate: serialno     =$serialno")
+        }
+
     }
 
     suspend fun showDialog(title: String, content: String) = suspendCancellableCoroutine { continuation ->
