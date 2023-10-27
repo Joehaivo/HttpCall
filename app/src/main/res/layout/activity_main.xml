@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"/>
 
             <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/et_sp"
+                android:id="@+id/et_sp_name"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"/>
 
@@ -127,5 +127,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/btn_dialog"/>
+        <androidx.cardview.widget.CardView
+            android:layout_width="100dp"
+            android:layout_height="200dp"
+            app:cardCornerRadius="18dp"
+            android:elevation="0dp">
+        <com.github.joehaivo.httpcall.ProgressWaveView
+            android:id="@+id/wave_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            />
+        </androidx.cardview.widget.CardView>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.constraintlayout.widget.ConstraintLayout>

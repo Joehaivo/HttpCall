@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.GsonUtils
+import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.github.joehaivo.httpcall.databinding.ActivityMainBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -52,18 +53,23 @@ class MainActivity : AppCompatActivity() {
         binding.btnDialog.setOnClickListener {
             lifecycleScope.launch {
                 showDialog("签到活动", "签到领10000币")
-                showDialog("新手任务", "做任务领20000币")
+                showDialogOnce("新手任务", "做任务领20000币")
                 showDialog("首充奖励", "首充6元送神装")
             }
         }
         binding.btnSpRead.setOnClickListener {
-            binding.tvContent.text = "${KVPool.user.id} - ${KVPool.user.name}"
+            binding.tvContent.text = " -${SPool.isDarkMode} - ${SPool.userName}"
+//            binding.tvContent.text = "${SPool.Global.userId} - ${binding.etSpId.text.toString().toLong()} ${SPool.User.name}"
 
         }
         binding.btnSpWrite.setOnClickListener {
             binding.tvContent.text = ""
-            KVPool.user.id = binding.etSpId.text.toString()
-            KVPool.user.name = binding.etSp.text.toString()
+//            SPool.userId = binding.etSpId.text.toString().toLong()
+            SPool.userName = binding.etSpName.text.toString()
+            SPool.isDarkMode = !SPool.isDarkMode
+
+            val isDarkMode = SPool.isDarkMode // 读
+            SPool.isDarkMode = !SPool.isDarkMode // 写
         }
         binding.podId.setOnClickListener {
             val serialno = CloudDeviceUtils.getPodId()
@@ -100,6 +106,11 @@ class MainActivity : AppCompatActivity() {
             }
             ToastUtils.showLong("ktJson spend ${millis}ms")
         }
+        binding.waveView.progress = 90
+            binding.waveView.binding.tvName.setTextColor(if (binding.waveView.progress >= 90) getColor(R.color.white) else getColor(R.color.t1_color))
+        binding.waveView.binding.tvName.text = "内存"
+//        binding.waveView.binding.tvProgress.setTextColor(if (binding.waveView.progress > 10) getColor(R.color.white) else getColor(R.color.t1_color))
+        binding.waveView.binding.tvProgress.text = "80%"
     }
 
     suspend fun showDialog(title: String, content: String) = suspendCancellableCoroutine { continuation ->
@@ -113,5 +124,24 @@ class MainActivity : AppCompatActivity() {
                 continuation.resume(Unit)
             }
             .show()
+    }
+
+    suspend fun showDialogOnce(title: String, content: String) = suspendCancellableCoroutine { continuation ->
+        val showed = SPUtils.getInstance().getBoolean(title)
+        if (showed) {
+            continuation.resume(Unit)
+            return@suspendCancellableCoroutine
+        }
+        MaterialAlertDialogBuilder(this)
+            .setTitle(title)
+            .setMessage(content)
+            .setPositiveButton("我知道了") { dialog, which ->
+                dialog.dismiss()
+            }
+            .setOnDismissListener {
+                continuation.resume(Unit)
+            }
+            .show()
+        SPUtils.getInstance().put(title, true)
     }
 }
