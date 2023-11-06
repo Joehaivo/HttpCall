@@ -22,7 +22,7 @@
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_async"
@@ -33,7 +33,7 @@
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_single"/>
+            app:layout_constraintTop_toBottomOf="@id/btn_single" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_dialog"
@@ -44,7 +44,7 @@
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_async"/>
+            app:layout_constraintTop_toBottomOf="@id/btn_async" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/ll_sp"
@@ -54,12 +54,12 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/et_sp_id"
                 android:layout_width="60dp"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/et_sp_name"
                 android:layout_width="60dp"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_sp_read"
@@ -70,7 +70,7 @@
                 android:text="读SP"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btn_async"/>
+                app:layout_constraintTop_toBottomOf="@id/btn_async" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_sp_write"
@@ -81,7 +81,7 @@
                 android:text="写SP"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btn_async"/>
+                app:layout_constraintTop_toBottomOf="@id/btn_async" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -94,12 +94,12 @@
             android:text="PODID"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_gson"
                 style="@style/Widget.Material3.Button.IconButton.Filled"
@@ -109,7 +109,7 @@
                 android:text="Gson Benchmark"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_serial"
@@ -120,24 +120,33 @@
                 android:text="Kotlin Serializtion Benchmark"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.appcompat.widget.LinearLayoutCompat>
+
         <TextView
             android:id="@+id/tv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/btn_dialog"/>
-        <androidx.cardview.widget.CardView
-            android:layout_width="100dp"
-            android:layout_height="200dp"
-            app:cardCornerRadius="18dp"
-            android:elevation="0dp">
-        <com.github.joehaivo.httpcall.ProgressWaveView
-            android:id="@+id/wave_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_dialog" />
 
-            />
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:elevation="0dp"
+            app:cardCornerRadius="18dp">
+
+            <com.github.joehaivo.httpcall.ProgressWaveView
+                android:id="@+id/wave_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                />
         </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_connect_service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Echo Service"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.constraintlayout.widget.ConstraintLayout>

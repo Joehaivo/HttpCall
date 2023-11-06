@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.github.joehaivo.httpcall.databinding.ActivityMainBinding
+import com.github.joehaivo.httpcall.ipc.EchoServiceActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -106,11 +107,15 @@ class MainActivity : AppCompatActivity() {
             }
             ToastUtils.showLong("ktJson spend ${millis}ms")
         }
-        binding.waveView.progress = 90
-            binding.waveView.binding.tvName.setTextColor(if (binding.waveView.progress >= 90) getColor(R.color.white) else getColor(R.color.t1_color))
+        binding.waveView.progress = 80
+        binding.waveView.binding.tvName.setTextColor(if (binding.waveView.progress >= 90) getColor(R.color.white) else getColor(R.color.t1_color))
         binding.waveView.binding.tvName.text = "内存"
 //        binding.waveView.binding.tvProgress.setTextColor(if (binding.waveView.progress > 10) getColor(R.color.white) else getColor(R.color.t1_color))
         binding.waveView.binding.tvProgress.text = "80%"
+
+        binding.btnConnectService.setOnClickListener {
+            EchoServiceActivity.startSelf(this)
+        }
     }
 
     suspend fun showDialog(title: String, content: String) = suspendCancellableCoroutine { continuation ->
