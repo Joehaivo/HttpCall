@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.8.20'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -18,10 +19,26 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            keyAlias 'keyAlias1'
+            keyPassword 'haivokey'
+            storeFile file('haivo.jks')
+            storePassword 'haivopwd'
+            v1SigningEnabled = true
+            v2SigningEnabled = true
+            enableV3Signing = true
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            signingConfig signingConfigs.release
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
@@ -70,7 +87,7 @@ dependencies {
 //    implementation 'com.github.li-xiaojun.AndroidKTX:library:2.8.6'
 
     implementation 'com.tencent:mmkv-static:1.2.13'
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0"
+//    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0"
 
 //    implementation "com.google.android.material:compose-theme-adapter:1.2.1"
     implementation platform('androidx.compose:compose-bom:2023.01.00')

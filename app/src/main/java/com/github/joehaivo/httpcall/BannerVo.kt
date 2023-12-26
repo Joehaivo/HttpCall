@@ -2,10 +2,8 @@ package com.github.joehaivo.httpcall
 
 
 import androidx.annotation.Keep
-import kotlinx.serialization.Serializable
 
 @Keep
-@Serializable
 data class BannerVo(
     val desc: String? = "",
     val id: Int? = 666,

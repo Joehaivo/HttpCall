@@ -7,21 +7,22 @@ import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.github.joehaivo.httpcall.activityresult.ActivityA
 import com.github.joehaivo.httpcall.databinding.ActivityMainBinding
 import com.github.joehaivo.httpcall.ipc.EchoServiceActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+//import kotlinx.serialization.encodeToString
+//import kotlinx.serialization.json.Json
 import kotlin.coroutines.resume
 import kotlin.system.measureTimeMillis
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    private val json1 = Json { encodeDefaults = true }
+//    private val json1 = Json { encodeDefaults = true }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,16 +94,16 @@ class MainActivity : AppCompatActivity() {
             ToastUtils.showLong("Gson spend ${millis}ms")
         }
         binding.btnSerial.setOnClickListener {
-            val json2 = Json { encodeDefaults = true }
+//            val json2 = Json { encodeDefaults = true }
             val millis = measureTimeMillis {
                 var bannerVo: BannerVo
                 var bannerJson: String
                 repeat(100000) { i ->
-                    bannerJson = json2.encodeToString(BannerVo(desc = "desc$i"))
-                    bannerVo = json2.decodeFromString(bannerJson)
-                    if (i % 10000 == 0) {
-                        Log.d("TAG", "ktJson encode:$bannerJson, decode:$bannerVo")
-                    }
+//                    bannerJson = json2.encodeToString(BannerVo(desc = "desc$i"))
+//                    bannerVo = json2.decodeFromString(bannerJson)
+//                    if (i % 10000 == 0) {
+//                        Log.d("TAG", "ktJson encode:$bannerJson, decode:$bannerVo")
+//                    }
                 }
             }
             ToastUtils.showLong("ktJson spend ${millis}ms")
@@ -115,6 +116,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnConnectService.setOnClickListener {
             EchoServiceActivity.startSelf(this)
+        }
+        binding.btnActivityResult.setOnClickListener {
+            ActivityA.startSelf(this)
         }
     }
 
