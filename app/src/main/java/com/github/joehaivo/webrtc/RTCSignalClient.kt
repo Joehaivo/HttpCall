@@ -34,11 +34,6 @@ class RTCSignalClient {
         mOnSignalEventListener = listener
     }
 
-    data class Query(
-        val auth: String,
-        val room: String
-    )
-
     fun joinRoom(url: String, userId: String, roomName: String) {
         Log.i(TAG, "joinRoom: $url, $userId, $roomName")
         try {

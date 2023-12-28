@@ -44,6 +44,7 @@ import org.webrtc.VideoEncoderFactory
 import org.webrtc.VideoFrame
 import org.webrtc.VideoSink
 import org.webrtc.VideoTrack
+import java.nio.ByteBuffer
 import java.util.UUID
 
 class CallActivity : AppCompatActivity() {
@@ -60,8 +61,8 @@ class CallActivity : AppCompatActivity() {
     private var mAudioTrack: AudioTrack? = null
     private var mVideoCapturer: VideoCapturer? = null
 
-    private var sendChannel: DataChannel? = null
-    private var  roomName: String? = null
+    private var dataChannel: DataChannel? = null
+    private var roomName: String? = null
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -109,7 +110,21 @@ class CallActivity : AppCompatActivity() {
         mAudioTrack?.setEnabled(true)
 
         mRemoteSurfaceView?.setOnTouchListener { v, event ->
-
+            val mouseMsg = MouseMsg(
+                data = MouseMsg.MouseData(
+                    ActiveType = event.toMouseEventType().v,
+                    x = event.x,
+                    y = event.y,
+                    InterfaceWidth = v.width,
+                    InterfaceHigh = v.height
+                )
+            )
+            val json = GsonUtils.toJson(mouseMsg)
+            val bytes = json.toByteArray()
+            if (dataChannel?.state() == DataChannel.State.OPEN) {
+                Log.i(TAG, "mouseMsg: $json")
+                dataChannel?.send(DataChannel.Buffer(ByteBuffer.wrap(bytes), false))
+            }
             return@setOnTouchListener true
         }
     }
@@ -142,6 +157,7 @@ class CallActivity : AppCompatActivity() {
 
     class ProxyVideoSink : VideoSink {
         private var mTarget: VideoSink? = null
+
         @Synchronized
         override fun onFrame(frame: VideoFrame) {
             if (mTarget == null) {
@@ -199,15 +215,36 @@ class CallActivity : AppCompatActivity() {
 
     data class CmdOfferData(val type: String, val sdp: String)
     data class CmdOffer(val cmd: String, val data: CmdOfferData)
+
     fun doStartCall() {
         logcatOnUI("Start Call, Wait ...")
         if (mPeerConnection == null) {
             mPeerConnection = createPeerConnection()
         }
         val mediaConstraints = MediaConstraints()
-        mediaConstraints.mandatory.add(MediaConstraints.KeyValuePair("OfferToReceiveAudio", "false"))
+        mediaConstraints.mandatory.add(
+            MediaConstraints.KeyValuePair(
+                "OfferToReceiveAudio",
+                "false"
+            )
+        )
         mediaConstraints.mandatory.add(MediaConstraints.KeyValuePair("OfferToReceiveVideo", "true"))
 //        mediaConstraints.optional.add(MediaConstraints.KeyValuePair("DtlsSrtpKeyAgreement", "true"))
+        dataChannel = mPeerConnection?.createDataChannel("fileTransfer", DataChannel.Init())
+        Log.i(TAG, "createDataChannel: ${GsonUtils.toJson(dataChannel)}")
+        dataChannel?.registerObserver(object : DataChannel.Observer {
+            override fun onBufferedAmountChange(p0: Long) {
+                Log.i(TAG, "dataChannel onBufferedAmountChange: $p0")
+            }
+
+            override fun onStateChange() {
+                Log.i(TAG, "dataChannel onStateChange: ${dataChannel?.state()}")
+            }
+
+            override fun onMessage(p0: DataChannel.Buffer?) {
+                Log.i(TAG, "dataChannel onMessage: $p0")
+            }
+        })
         mPeerConnection?.createOffer(object : SimpleSdpObserver() {
             override fun onCreateSuccess(sessionDescription: SessionDescription) {
                 Log.i(TAG, "Create local offer success: \n" + sessionDescription.description)
@@ -358,7 +395,12 @@ class CallActivity : AppCompatActivity() {
         return null
     }
 
-    data class CmdCandidateData(val id: String, val label: Int, val candidate: String, val type: String)
+    data class CmdCandidateData(
+        val id: String,
+        val label: Int,
+        val candidate: String,
+        val type: String
+    )
 
     data class CmdCandidate(val cmd: String, val data: CmdCandidateData)
 
@@ -370,10 +412,6 @@ class CallActivity : AppCompatActivity() {
 
             override fun onIceConnectionChange(iceConnectionState: IceConnectionState) {
                 Log.i(TAG, "onIceConnectionChange: $iceConnectionState")
-                if (iceConnectionState == IceConnectionState.CONNECTED) {
-                    sendChannel = mPeerConnection?.createDataChannel("fileTransfer$roomName", DataChannel.Init())
-                    Log.i(TAG, "createDataChannel: $sendChannel")
-                }
             }
 
             override fun onIceConnectionReceivingChange(b: Boolean) {
@@ -423,8 +461,7 @@ class CallActivity : AppCompatActivity() {
             }
 
             override fun onDataChannel(dataChannel: DataChannel) {
-                Log.i(TAG, "onDataChannel + $dataChannel")
-
+                Log.i(TAG, "onDataChannel ${GsonUtils.toJson(dataChannel)}")
             }
 
             override fun onRenegotiationNeeded() {
@@ -499,7 +536,7 @@ class CallActivity : AppCompatActivity() {
         }
 
         override fun onPodCandidate(candidate: IceCandidate) {
-            mPeerConnection?.addIceCandidate(candidate)
+//            mPeerConnection?.addIceCandidate(candidate)
         }
 
         private fun onRemoteOfferReceived(userId: String, message: JSONObject?) {
