@@ -154,5 +154,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="activity_result"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_webrtc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="WebRTC"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">HttpCall</string>
+    <string name="join_room">Join</string>
+    <string name="room_tips">room id: </string>
+    <string name="server_tips">signal server: </string>
+    <string name="default_server">https://testsign.kyyai.com/signaling</string>
 </resources>

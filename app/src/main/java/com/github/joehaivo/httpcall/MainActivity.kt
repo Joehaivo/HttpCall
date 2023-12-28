@@ -10,6 +10,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.github.joehaivo.httpcall.activityresult.ActivityA
 import com.github.joehaivo.httpcall.databinding.ActivityMainBinding
 import com.github.joehaivo.httpcall.ipc.EchoServiceActivity
+import com.github.joehaivo.webrtc.RTCActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -119,6 +120,9 @@ class MainActivity : AppCompatActivity() {
         }
         binding.btnActivityResult.setOnClickListener {
             ActivityA.startSelf(this)
+        }
+        binding.btnWebrtc.setOnClickListener {
+            RTCActivity.startSelf(this)
         }
     }
 
